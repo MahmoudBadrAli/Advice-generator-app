@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advice generator app</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@100;200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container"><span>Advice #<span class="number"> </span></span>
+      <q></q><img class="divider desk" src="Challenge/advice-generator-app-main/images/pattern-divider-desktop.svg"><img class="divider mob" src="Challenge/advice-generator-app-main/images/pattern-divider-mobile.svg">
+      <div class="image"><img class="dice" src="Challenge/advice-generator-app-main/images/icon-dice.svg"></div>
+    </div>
+    <script>
+      const adviceID = document.querySelector(".container .number");
+      const quote = document.querySelector(".container q");
+      const dice = document.querySelector(".container .image");
+      const diceImage = document.querySelector(".container .image img");
+      dice.addEventListener("click", () => {
+        getAdvice();
+      });
+      async function getAdvice() {
+        try {
+          const res = await fetch("https://api.adviceslip.com/advice");
+          const data = await res.json();
+          adviceID.textContent = data.slip.id;
+          quote.textContent = data.slip.advice;
+        diceImage.classList.toggle("rotate")
+        } catch (error) {
+          console.log("There was a problem fetching the advice:", error);
+        }
+      }
+      getAdvice();
+    </script>
+  </body>
+</html>
